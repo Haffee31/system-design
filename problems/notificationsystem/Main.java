@@ -9,7 +9,9 @@ public class Main {
         Notification emailNotification = notificationFactory.create(NotificationType.EMAIL);
 
         try {
-            RetryService retryService = new RetryService();
+            RetryConfig retryConfig = new RetryConfig(10);
+
+            RetryService retryService = new RetryService(retryConfig);
             retryService.execute(emailNotification);
 
         } catch (Exception e) {

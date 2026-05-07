@@ -2,10 +2,15 @@ package problems.notificationsystem;
 
 class RetryService {
 
-    public void execute(Notification notification) {
-        int maxRetries = 3;
+    private final int maxRetries;
 
-        for (int attempt = 1; attempt <= maxRetries; attempt++) {
+    public RetryService(RetryConfig retryConfig) {
+        this.maxRetries = retryConfig.getMaxRetries();
+    }
+
+    public void execute(Notification notification) {
+
+        for (int attempt = 1; attempt <= this.maxRetries; attempt++) {
             try {
                 notification.send("Notification from Retry Service");
 

@@ -11,7 +11,7 @@ public class EmailNotification implements Notification {
         // Introducing Failure Simulation
         System.out.println("Message sending via Email Notification: " + message);
 
-        if (Math.random() > 0.7) {
+        if (Math.random() < 0.7) {
             throw new Exception("Email service failed");
         }
 
