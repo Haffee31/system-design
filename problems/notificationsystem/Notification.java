@@ -2,5 +2,5 @@ package problems.notificationsystem;
 
 interface Notification {
 
-    void send(String message);
+    void send(String message) throws Exception;
 }
