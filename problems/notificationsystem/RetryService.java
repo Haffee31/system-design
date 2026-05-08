@@ -2,15 +2,17 @@ package problems.notificationsystem;
 
 class RetryService {
 
-    private final int maxRetries;
+    private RetryConfig retryConfig;
+    private RetryStrategy retryStrategy;
 
-    public RetryService(RetryConfig retryConfig) {
-        this.maxRetries = retryConfig.getMaxRetries();
+    public RetryService(RetryConfig retryConfig, RetryStrategy retryStrategy) {
+        this.retryConfig = retryConfig;
+        this.retryStrategy = retryStrategy;
     }
 
     public void execute(Notification notification) {
 
-        for (int attempt = 1; attempt <= this.maxRetries; attempt++) {
+        for (int attempt = 1; attempt <= retryConfig.getMaxRetries(); attempt++) {
             try {
                 notification.send("Notification from Retry Service");
 
@@ -23,8 +25,12 @@ class RetryService {
                 );
 
                 try {
-                    System.out.println("waiting for 10000ms before retry");
-                    Thread.sleep(10000);
+
+                    long delay = retryStrategy.getDelay(attempt);
+
+                    System.out.println("waiting for " + delay + "ms before retry");
+                    Thread.sleep(delay);
+
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }

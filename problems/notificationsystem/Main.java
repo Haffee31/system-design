@@ -9,14 +9,20 @@ public class Main {
         Notification emailNotification = notificationFactory.create(NotificationType.EMAIL);
 
         try {
+            // Fixed Delay Strategy 
             RetryConfig retryConfig = new RetryConfig(10);
 
-            RetryService retryService = new RetryService(retryConfig);
+            // Fixed Delay Strategy
+            // RetryStrategy strategy = new FixedDelayStrategy(1000);
+
+            // ExponentialBackoffStrategy strategy
+            RetryStrategy strategy = new ExponentialBackoffStrategy(1000);
+
+            RetryService retryService = new RetryService(retryConfig, strategy);
             retryService.execute(emailNotification);
 
         } catch (Exception e) {
             System.out.println("Exception while retrying email notification");
         }
-        // emailNotification.send("Hello there!");
     }
 }
