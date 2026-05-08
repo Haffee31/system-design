@@ -21,6 +21,13 @@ class RetryService {
                 System.out.println(
                         "Attempt " + attempt + " failed"
                 );
+
+                try {
+                    System.out.println("waiting for 10000ms before retry");
+                    Thread.sleep(10000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
 
