@@ -3,32 +3,63 @@ package problems.parkinglot;
 public class Main {
 
     public static void main(String[] args) {
-        ParkingFloor floor = new ParkingFloor(1);
 
-        ParkingSpot carSpot = new ParkingSpot(1, SpotType.CAR);
-        ParkingSpot bikeSpot = new ParkingSpot(2, SpotType.BIKE);
-        ParkingSpot truckSpot = new ParkingSpot(3, SpotType.TRUCK);
+        ParkingLot parkingLot
+                = new ParkingLot("Hafeez Parking Lot");
 
-        floor.addParkingSpot(carSpot);
-        floor.addParkingSpot(bikeSpot);
-        floor.addParkingSpot(truckSpot);
+        ParkingFloor floor1
+                = new ParkingFloor(1);
 
-        Car car = new Car("Car-1");
-        Bike bike = new Bike("Bike-1");
-        Truck truck = new Truck("Truck-1");
+        floor1.addParkingSpot(
+                new ParkingSpot(1, SpotType.BIKE)
+        );
 
-        ParkingSpot spotToParkVehicle = floor.findAvailableSpot(truck);
-        spotToParkVehicle.parkVehicle(truck);
+        floor1.addParkingSpot(
+                new ParkingSpot(2, SpotType.CAR)
+        );
 
-        ParkingSpot spot2 = floor.findAvailableSpot(bike);
-        spot2.parkVehicle(bike);
+        floor1.addParkingSpot(
+                new ParkingSpot(3, SpotType.TRUCK)
+        );
 
-        ParkingSpot spot3 = floor.findAvailableSpot(truck);
-        if (spot3 == null) {
-            System.out.println("Spot Not available");
-        } else {
-            spot3.parkVehicle(truck);
-        }
+        ParkingFloor floor2
+                = new ParkingFloor(2);
 
+        floor2.addParkingSpot(
+                new ParkingSpot(4, SpotType.CAR)
+        );
+
+        floor2.addParkingSpot(
+                new ParkingSpot(5, SpotType.BIKE)
+        );
+
+        parkingLot.addFloor(floor1);
+        parkingLot.addFloor(floor2);
+
+        Vehicle car
+                = new Car("KA-01-CAR");
+
+        Vehicle bike
+                = new Bike("KA-01-BIKE");
+
+        Vehicle truck
+                = new Truck("KA-01-TRUCK");
+
+        Ticket carTicket
+                = parkingLot.parkVehicle(car);
+
+        Ticket bikeTicket
+                = parkingLot.parkVehicle(bike);
+
+        Ticket truckTicket
+                = parkingLot.parkVehicle(truck);
+
+        parkingLot.parkVehicle(truck);
+
+        parkingLot.displayAvailability();
+
+        parkingLot.unparkVehicle(carTicket);
+
+        parkingLot.displayAvailability();
     }
 }
